@@ -1,0 +1,79 @@
+# Build Folders (retain bin for dlls and pdbs if preferred)
+[Bb]in/
+[Oo]bj/
+
+# Logs and temporary files
+Logs/
+*.log
+*.tmp
+
+# Visual Studio and User-Specific Files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Generated project files
+project.lock.json
+TestResults/
+
+# Build Results
+[Dd]ebug/
+[Rr]elease/
+x64/
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+
+# Visual C++ and temporary cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+
+# Profiling & Debugging
+*.psess
+*.vsp
+*.vspx
+
+# Tool-Specific (e.g., ReSharper, Rider)
+_ReSharper*
+.idea/
+*.ncrunch*
+.*crunch*.local.xml
+
+# Build Output, Click-Once, and Packaging
+publish/
+*.Publish.xml
+packages/
+AppPackages/
+csx/
+*.build.csdef
+
+# Miscellaneous
+sql
+[Tt]est[Rr]esult*
+*.Cache
+ClientBin
+[Ss]tyle[Cc]op.*
+~$*
+*.dbmdl
+Generated_Code
+
+# Backup and Report Files
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+src/.vs/config/applicationhost.config
+
+# Environment Files (sensitive configurations)
+.env
+.env.*

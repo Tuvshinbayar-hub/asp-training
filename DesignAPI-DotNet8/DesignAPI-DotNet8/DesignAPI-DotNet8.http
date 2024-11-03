@@ -1,0 +1,11 @@
+@DesignAPI_DotNet8_HostAddress = https://localhost:7027
+@DesignAPI_DotNet8_HostAddress = http://localhost:5233
+
+GET {{DesignAPI_DotNet8_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{DesignAPI_DotNet8_HostAddress}}/api/design
+
+###
