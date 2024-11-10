@@ -15,7 +15,7 @@ namespace DesignAPI_DotNet8.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> getStyles()
+        public async Task<IActionResult> GetStyles()
         {
             var styles = await _styleService.GetAllStylesAsync();
             return Ok(styles);

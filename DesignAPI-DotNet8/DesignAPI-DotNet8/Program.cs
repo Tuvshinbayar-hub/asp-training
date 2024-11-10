@@ -1,4 +1,8 @@
 using DesignAPI_DotNet8.Data;
+using DesignAPI_DotNet8.Data.Interfaces;
+using DesignAPI_DotNet8.Data.Repositories;
+using DesignAPI_DotNet8.Services;
+using DesignAPI_DotNet8.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +20,9 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseMySQL(connectionString);
 });
+
+builder.Services.AddScoped<IStyleService, StyleService>();
+builder.Services.AddScoped<IStyleRepository, StyleRepository>();
 
 var app = builder.Build();
 
