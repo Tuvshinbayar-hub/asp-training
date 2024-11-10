@@ -1,4 +1,5 @@
-﻿using DesignAPI_DotNet8.Entities;
+﻿using DesignAPI_DotNet8.Models;
+using DesignAPI_DotNet8.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;

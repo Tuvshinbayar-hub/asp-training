@@ -1,4 +1,4 @@
-﻿using DesignAPI_DotNet8.Entities;
+﻿using DesignAPI_DotNet8.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DesignAPI_DotNet8.Data
@@ -7,9 +7,10 @@ namespace DesignAPI_DotNet8.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
+                        
         }
 
         public DbSet<Design> Designers { get; set; }
+        public DbSet<Style> Styles { get; set; }
     }
 }
