@@ -1,5 +1,4 @@
 ﻿using DesignAPI_DotNet8.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesignAPI_DotNet8.Controllers
@@ -19,6 +18,6 @@ namespace DesignAPI_DotNet8.Controllers
         {
             var styles = await _styleService.GetAllStylesAsync();
             return Ok(styles);
-        }
+        }       
     }
 }

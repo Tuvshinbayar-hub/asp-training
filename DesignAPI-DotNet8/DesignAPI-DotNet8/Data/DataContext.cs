@@ -1,5 +1,6 @@
 ﻿using DesignAPI_DotNet8.Models;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Mozilla;
 
 namespace DesignAPI_DotNet8.Data
 {
@@ -12,5 +13,6 @@ namespace DesignAPI_DotNet8.Data
 
         public DbSet<Design> Designers { get; set; }
         public DbSet<Style> Styles { get; set; }
+        public DbSet<PantoneColor> PantoneColors { get; set; }
     }
 }

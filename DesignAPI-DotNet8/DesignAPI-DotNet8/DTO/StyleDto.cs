@@ -1,11 +1,9 @@
-﻿namespace DesignAPI_DotNet8.Models
+﻿namespace DesignAPI_DotNet8.DTO
 {
-    public class Style
+    public class StyleDto
     {
-        public int Id { get; set; }
         public required string Code { get; set; }
         public required string Name { get; set; }
-        public required string Description { get; set; }
         public required string Season { get; set; }
     }
 }

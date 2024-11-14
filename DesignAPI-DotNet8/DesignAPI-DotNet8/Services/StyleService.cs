@@ -1,4 +1,5 @@
 ﻿using DesignAPI_DotNet8.Data.Interfaces;
+using DesignAPI_DotNet8.DTO;
 using DesignAPI_DotNet8.Models;
 using DesignAPI_DotNet8.Services.Interfaces;
 
@@ -12,7 +13,7 @@ namespace DesignAPI_DotNet8.Services
             _styleRepository = styleRepository;
         }
 
-        public Task<List<Style>> GetAllStylesAsync()
+        public Task<List<StyleDto>> GetAllStylesAsync()
         {
             return _styleRepository.GetStylesAsync();
         }

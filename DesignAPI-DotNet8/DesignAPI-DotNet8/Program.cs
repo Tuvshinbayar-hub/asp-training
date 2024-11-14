@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Environmental variable loading
 DotNetEnv.Env.Load();
 
+builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

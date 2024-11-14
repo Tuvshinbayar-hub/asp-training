@@ -1,40 +1,40 @@
 # MyApp.Api Project Directory Structure
 
 MyApp.Api
-??? Controllers
-?   ??? ProductsController.cs
-?   ??? UsersController.cs
-??? Models
-?   ??? Product.cs
-?   ??? User.cs
-??? Data
-?   ??? MyAppDbContext.cs
-?   ??? Repositories
-?   ?   ??? ProductRepository.cs
-?   ?   ??? UserRepository.cs
-?   ??? Interfaces
-?       ??? IProductRepository.cs
-?       ??? IUserRepository.cs
-??? Services
-?   ??? Interfaces
-?   ?   ??? IProductService.cs
-?   ?   ??? IUserService.cs
-?   ??? ProductService.cs
-?   ??? UserService.cs
-??? DTOs
-?   ??? ProductDto.cs
-?   ??? UserDto.cs
-??? Mappers
-?   ??? MappingProfile.cs
-??? Middlewares
-?   ??? CustomExceptionMiddleware.cs
-??? Configurations
-?   ??? JwtSettings.cs
-??? Helpers
-?   ??? DateHelper.cs
-??? Program.cs
-??? Startup.cs
-??? appsettings.json
+- Controllers
+|   - ProductsController.cs
+|   - UsersController.cs
+- Models
+|   - Product.cs
+|   - User.cs
+- Data
+|   - MyAppDbContext.cs
+|   - Repositories
+|   |   - ProductRepository.cs
+|   |   - UserRepository.cs
+|   - Interfaces
+|       - IProductRepository.cs
+|       - IUserRepository.cs
+- Services
+|   - Interfaces
+|   |   - IProductService.cs
+|   |   - IUserService.cs
+|   - ProductService.cs
+|   - UserService.cs
+- DTOs
+|   - ProductDto.cs
+|   - UserDto.cs
+- Mappers
+|   - MappingProfile.cs
+- Middlewares
+|   - CustomExceptionMiddleware.cs
+- Configurations
+|   - JwtSettings.cs
+- Helpers
+|   - DateHelper.cs
+- Program.cs
+- Startup.cs
+- appsettings.json
 
 Controllers/: Contains controllers handling HTTP requests (e.g., ProductsController).
 Models/: Defines model classes representing database entities (e.g., Product, User).
