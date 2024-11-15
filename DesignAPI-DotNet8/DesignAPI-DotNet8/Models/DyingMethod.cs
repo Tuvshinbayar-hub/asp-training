@@ -2,7 +2,7 @@
 
 namespace DesignAPI_DotNet8.Models
 {
-    public class ColorGroup: Base
+    public class DyingMethod: Base
     {
         public string Name { get; set; }
     }

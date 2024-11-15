@@ -3,6 +3,7 @@ using System;
 using DesignAPI_DotNet8.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesignAPI_DotNet8.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241115044936_PantonyColor")]
+    partial class PantonyColor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +58,30 @@ namespace DesignAPI_DotNet8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("PropertyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RgbHex")
+                        .HasMaxLength(7)
+                        .HasColumnType("varchar(7)");
+
+                    b.Property<string>("RgbTriple")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId")
+                        .IsUnique();
+
+                    b.ToTable("PantoneColors");
+                });
+
+            modelBuilder.Entity("DesignAPI_DotNet8.Models.PantoneColorProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -75,18 +102,14 @@ namespace DesignAPI_DotNet8.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("RgbHex")
-                        .HasMaxLength(7)
-                        .HasColumnType("varchar(7)");
-
-                    b.Property<string>("RgbTriple")
-                        .HasColumnType("longtext");
+                    b.Property<int>("PantoneColorId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ColorGroupNameId");
 
-                    b.ToTable("PantoneColors");
+                    b.ToTable("PantoneColorProperties");
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Style", b =>
@@ -118,11 +141,28 @@ namespace DesignAPI_DotNet8.Migrations
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.PantoneColor", b =>
                 {
+                    b.HasOne("DesignAPI_DotNet8.Models.PantoneColorProperty", "Property")
+                        .WithOne("PantoneColor")
+                        .HasForeignKey("DesignAPI_DotNet8.Models.PantoneColor", "PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("DesignAPI_DotNet8.Models.PantoneColorProperty", b =>
+                {
                     b.HasOne("DesignAPI_DotNet8.Models.ColorGroup", "ColorGroupName")
                         .WithMany()
                         .HasForeignKey("ColorGroupNameId");
 
                     b.Navigation("ColorGroupName");
+                });
+
+            modelBuilder.Entity("DesignAPI_DotNet8.Models.PantoneColorProperty", b =>
+                {
+                    b.Navigation("PantoneColor")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
