@@ -3,6 +3,7 @@ using System;
 using DesignAPI_DotNet8.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesignAPI_DotNet8.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241118073615_Colors")]
+    partial class Colors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +68,7 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Property<float>("Cotton")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("CreatedById")
@@ -74,7 +77,7 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Property<bool>("IsDefault")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("ModefiedAt")
+                    b.Property<DateTime>("ModefiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("ModifiedById")
@@ -165,16 +168,16 @@ namespace DesignAPI_DotNet8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ColorRecipeId")
+                    b.Property<int>("ColorRecipeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ColorShadeId")
+                    b.Property<int>("ColorShadeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ColorTypeId")
+                    b.Property<int>("ColorTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("CreatedById")
@@ -183,7 +186,7 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Property<int>("DandruffClassification")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DyingMethodId")
+                    b.Property<int>("DyingMethodId")
                         .HasColumnType("int");
 
                     b.Property<string>("FourDigitColorCode")
@@ -198,13 +201,13 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Property<bool>("MainFlag")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("ModefiedAt")
+                    b.Property<DateTime>("ModefiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PantoneColorId")
+                    b.Property<int>("PantoneColorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -236,10 +239,10 @@ namespace DesignAPI_DotNet8.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("ColorGroupId")
+                    b.Property<int>("ColorGroupId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("CreatedById")
@@ -254,7 +257,7 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Property<bool>("IsOkForStyle")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<DateTime?>("ModefiedAt")
+                    b.Property<DateTime>("ModefiedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("ModifiedById")
@@ -303,7 +306,7 @@ namespace DesignAPI_DotNet8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int?>("CreatedById")
@@ -406,17 +409,20 @@ namespace DesignAPI_DotNet8.Migrations
                     b.HasOne("DesignAPI_DotNet8.Models.Colors.ColorRecipe", "ColorRecipe")
                         .WithMany()
                         .HasForeignKey("ColorRecipeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("DesignAPI_DotNet8.Models.Colors.ColorShade", "ColorShade")
                         .WithMany()
                         .HasForeignKey("ColorShadeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("DesignAPI_DotNet8.Models.Colors.ColorType", "ColorType")
                         .WithMany()
                         .HasForeignKey("ColorTypeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("DesignAPI_DotNet8.Models.Users.User", "CreatedBy")
                         .WithMany()
@@ -424,7 +430,9 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasOne("DesignAPI_DotNet8.Models.Colors.DyingMethod", "DyingMethod")
                         .WithMany()
-                        .HasForeignKey("DyingMethodId");
+                        .HasForeignKey("DyingMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DesignAPI_DotNet8.Models.Users.User", "ModifiedBy")
                         .WithMany()
@@ -433,7 +441,8 @@ namespace DesignAPI_DotNet8.Migrations
                     b.HasOne("DesignAPI_DotNet8.Models.Colors.PantoneColor", "PantoneColor")
                         .WithMany()
                         .HasForeignKey("PantoneColorId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.Navigation("ColorRecipe");
 
@@ -455,7 +464,8 @@ namespace DesignAPI_DotNet8.Migrations
                     b.HasOne("DesignAPI_DotNet8.Models.Colors.ColorGroup", "ColorGroup")
                         .WithMany()
                         .HasForeignKey("ColorGroupId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("DesignAPI_DotNet8.Models.Users.User", "CreatedBy")
                         .WithMany()

@@ -1,9 +1,8 @@
 ﻿using DesignAPI_DotNet8.Models.BaseModels;
-using Org.BouncyCastle.Asn1.Mozilla;
 
-namespace DesignAPI_DotNet8.Models
+namespace DesignAPI_DotNet8.Models.Colors
 {
-    public class PantoneColor: BaseWithModified
+    public class PantoneColor : BaseWithModified
     {
         public string Name { get; set; }
         public string Code { get; set; }
@@ -12,9 +11,10 @@ namespace DesignAPI_DotNet8.Models
         public bool IsOkForMaterial { get; set; } = true;
         public bool IsActive { get; set; } = true;
 
+        public int? ColorGroupId {  get; set; } 
         public ColorGroup? ColorGroup { get; set; }
+
         public string? RgbHex { get; set; }
         public string? RgbTriple { get; set; }
-        // public required User CreatedBy {get; set;}
     }
 }
