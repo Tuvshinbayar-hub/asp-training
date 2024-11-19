@@ -46,7 +46,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ColorGroups");
+                    b.ToTable("ColorGroups", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.ColorRecipe", b =>
@@ -111,7 +111,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasIndex("ModifiedById");
 
-                    b.ToTable("ColorRecipes");
+                    b.ToTable("ColorRecipe", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.ColorShade", b =>
@@ -126,7 +126,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ColorShades");
+                    b.ToTable("ColorShades", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.ColorType", b =>
@@ -141,7 +141,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ColorTypes");
+                    b.ToTable("ColorTypes", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.DyingMethod", b =>
@@ -156,7 +156,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DyingMethods");
+                    b.ToTable("DyingMethods", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.GobiColor", b =>
@@ -223,7 +223,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasIndex("PantoneColorId");
 
-                    b.ToTable("GobiColors");
+                    b.ToTable("GobiColors", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.PantoneColor", b =>
@@ -279,7 +279,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasIndex("ModifiedById");
 
-                    b.ToTable("PantoneColors");
+                    b.ToTable("PantoneColors", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Design", b =>
@@ -323,7 +323,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("PaintTypes");
+                    b.ToTable("PaintTypes", (string)null);
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Style", b =>
@@ -368,7 +368,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ColorRecipePaintType", b =>

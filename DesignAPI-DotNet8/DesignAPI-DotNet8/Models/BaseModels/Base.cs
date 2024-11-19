@@ -4,7 +4,7 @@ namespace DesignAPI_DotNet8.Models.BaseModels
 {
     public abstract class Base
     {
-        public int Id { get; private set; }
+        public int Id { get; protected set; }
     }
 
     public abstract class BaseCreation: Base

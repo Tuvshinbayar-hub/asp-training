@@ -47,10 +47,22 @@ namespace DesignAPI_DotNet8.Data
             //        .HasForeignKey("ModifiedById")
             //        .OnDelete(DeleteBehavior.SetNull);
             //});
-            modelBuilder.Entity<Base>().ToTable("Base");
-            modelBuilder.Entity<BaseCreation>().ToTable("BaseCreation");
-            modelBuilder.Entity<BaseWithModified>().ToTable("BaseWithModified");
+            //modelBuilder.Entity<Base>().ToTable("Base");
+            //modelBuilder.Entity<BaseCreation>().ToTable("BaseCreation");
+            //modelBuilder.Entity<BaseWithModified>().ToTable("BaseWithModified");
 
+            #endregion
+
+            #region TPT mappings
+            modelBuilder.Entity<PantoneColor>().ToTable("PantoneColors");
+            modelBuilder.Entity<ColorGroup>().ToTable("ColorGroups");
+            modelBuilder.Entity<GobiColor>().ToTable("GobiColors");
+            modelBuilder.Entity<ColorShade>().ToTable("ColorShades");
+            modelBuilder.Entity<ColorType>().ToTable("ColorTypes");
+            modelBuilder.Entity<DyingMethod>().ToTable("DyingMethods");
+            modelBuilder.Entity<PaintType>().ToTable("PaintTypes");
+            modelBuilder.Entity<ColorRecipe>().ToTable("ColorRecipe");
+            modelBuilder.Entity<User>().ToTable("Users");
             #endregion
 
             #region Colors
@@ -76,7 +88,7 @@ namespace DesignAPI_DotNet8.Data
                     .IsRequired();
             });
 
-            modelBuilder.Entity<ColorShade>(entity => 
+            modelBuilder.Entity<ColorShade>(entity =>
             {
                 entity.HasKey(a => a.Id);
                 entity.Property(a => a.Name)
