@@ -41,13 +41,12 @@ namespace DesignAPI_DotNet8.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateColorGroup(int id, [FromBody] ColorGroup colorGroup)
+        public async Task<IActionResult> UpdateColorGroup(int id,[FromBody] ColorGroup colorGroup)
         {
-            Console.WriteLine(colorGroup.Name);
-            Console.WriteLine(colorGroup.Id);
-            Console.WriteLine(id);
-            if (id != colorGroup.Id) return BadRequest();
-            _context.Entry(colorGroup).State = EntityState.Modified;
+            var existingColorGroup = await _context.ColorGroups.FindAsync(id);
+            if (existingColorGroup == null) return NotFound();
+
+            existingColorGroup.Name = colorGroup.Name;
 
             try
             {

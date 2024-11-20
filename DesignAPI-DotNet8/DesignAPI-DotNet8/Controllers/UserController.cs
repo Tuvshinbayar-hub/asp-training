@@ -42,11 +42,26 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
         {
-            if (id != user.Id) return BadRequest();
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var existingUser = await _context.Users.FindAsync(id);
+            if (existingUser == null) return NotFound();
+
+            // Update properties
+            existingUser.Name = user.Name;
+            existingUser.Role = user.Role;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Users.Any(u => u.Id == id)) return NotFound();
+                throw;
+            }
+
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

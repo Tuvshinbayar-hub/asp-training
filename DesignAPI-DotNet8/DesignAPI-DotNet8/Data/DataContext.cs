@@ -53,7 +53,7 @@ namespace DesignAPI_DotNet8.Data
 
             #endregion
 
-            #region TPT mappings
+            #region TPT Mappings
             modelBuilder.Entity<PantoneColor>().ToTable("PantoneColors");
             modelBuilder.Entity<ColorGroup>().ToTable("ColorGroups");
             modelBuilder.Entity<GobiColor>().ToTable("GobiColors");

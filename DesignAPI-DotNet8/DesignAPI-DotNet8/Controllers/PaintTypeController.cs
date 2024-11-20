@@ -43,8 +43,10 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePaintType(int id, [FromBody] PaintType paintType)
         {
-            if (id != paintType.Id) return BadRequest();
-            _context.Entry(paintType).State = EntityState.Modified;
+            var existingPaintType = await _context.PaintTypes.FindAsync(id);
+            if (existingPaintType == null) return NotFound();
+
+            existingPaintType.Name = paintType.Name;
 
             try
             {
@@ -58,6 +60,7 @@ namespace DesignAPI_DotNet8.Controllers
 
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaintType(int id)

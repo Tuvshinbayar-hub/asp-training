@@ -42,8 +42,10 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDyingMethod(int id, [FromBody] DyingMethod dyingMethod)
         {
-            if (id != dyingMethod.Id) return BadRequest();
-            _context.Entry(dyingMethod).State = EntityState.Modified;
+            var existingDyingMethod = await _context.DyingMethods.FindAsync(id);
+            if (existingDyingMethod == null) return NotFound();
+
+            existingDyingMethod.Name = dyingMethod.Name;
 
             try
             {
@@ -57,6 +59,7 @@ namespace DesignAPI_DotNet8.Controllers
 
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDyingMethod(int id)

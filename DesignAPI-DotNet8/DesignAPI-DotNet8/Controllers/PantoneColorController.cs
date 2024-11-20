@@ -42,11 +42,28 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePantoneColor(int id, [FromBody] PantoneColor pantoneColor)
         {
-            if (id != pantoneColor.Id) return BadRequest();
-            _context.Entry(pantoneColor).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var existingPantoneColor = await _context.PantoneColors.FindAsync(id);
+            if (existingPantoneColor == null) return NotFound();
+
+            // Update properties
+            existingPantoneColor.Name = pantoneColor.Name;
+            existingPantoneColor.Code = pantoneColor.Code;
+            existingPantoneColor.RgbHex = pantoneColor.RgbHex;
+            existingPantoneColor.ColorGroupId = pantoneColor.ColorGroupId;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.PantoneColors.Any(pc => pc.Id == id)) return NotFound();
+                throw;
+            }
+
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePantoneColor(int id)

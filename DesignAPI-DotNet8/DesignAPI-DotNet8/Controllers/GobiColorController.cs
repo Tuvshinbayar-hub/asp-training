@@ -53,9 +53,16 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGobiColor(int id, [FromBody] GobiColor gobiColor)
         {
-            if (id != gobiColor.Id) return BadRequest();
+            var existingGobiColor = await _context.GobiColors.FindAsync(id);
+            if (existingGobiColor == null) return NotFound();
 
-            _context.Entry(gobiColor).State = EntityState.Modified;
+            // Update properties
+            existingGobiColor.GobiColorCode = gobiColor.GobiColorCode;
+            existingGobiColor.FourDigitColorCode = gobiColor.FourDigitColorCode;
+            existingGobiColor.ColorTypeId = gobiColor.ColorTypeId;
+            existingGobiColor.ColorShadeId = gobiColor.ColorShadeId;
+            existingGobiColor.PantoneColorId = gobiColor.PantoneColorId;
+            existingGobiColor.ColorRecipeId = gobiColor.ColorRecipeId;
 
             try
             {
@@ -63,13 +70,13 @@ namespace DesignAPI_DotNet8.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.GobiColors.Any(gc => gc.Id == id))
-                    return NotFound();
+                if (!_context.GobiColors.Any(gc => gc.Id == id)) return NotFound();
                 throw;
             }
 
             return NoContent();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGobiColor(int id)

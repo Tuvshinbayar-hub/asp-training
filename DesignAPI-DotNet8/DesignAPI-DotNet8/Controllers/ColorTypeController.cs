@@ -42,9 +42,13 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateColorType(int id, [FromBody] ColorType colorType)
         {
-            if (id != colorType.Id) return BadRequest();
-            _context.Entry(colorType).State = EntityState.Modified;
+            var existingColorType = await _context.ColorTypes.FindAsync(id);
+            if (existingColorType == null) return NotFound();
+
+            existingColorType.Name = colorType.Name;
+
             await _context.SaveChangesAsync();
+
             return NoContent();
         }
 
