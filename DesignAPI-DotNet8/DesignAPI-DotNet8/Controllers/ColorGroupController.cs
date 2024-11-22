@@ -2,7 +2,6 @@
 using DesignAPI_DotNet8.Models.Colors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Drawing.Printing;
 
 namespace DesignAPI_DotNet8.Controllers
 {

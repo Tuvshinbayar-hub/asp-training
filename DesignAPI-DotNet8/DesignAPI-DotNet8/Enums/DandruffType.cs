@@ -2,5 +2,7 @@
 {
     public enum DandruffClassification
     {
+        Invisible = 0,
+        Visible = 1
     }
 }
