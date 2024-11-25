@@ -1,6 +1,6 @@
 ﻿using DesignAPI_DotNet8.Models.BaseModels;
 
-namespace DesignAPI_DotNet8.Models.Supplier
+namespace DesignAPI_DotNet8.Models.Suppliers
 {
     public class Classification2: Base
     {

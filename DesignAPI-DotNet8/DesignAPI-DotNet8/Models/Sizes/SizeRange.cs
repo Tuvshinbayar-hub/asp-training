@@ -19,3 +19,4 @@ namespace DesignAPI_DotNet8.Models.Sizes
         public List<Size>? Sizes { get; set; }
     }
 }
+

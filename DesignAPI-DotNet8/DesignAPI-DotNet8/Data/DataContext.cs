@@ -1,8 +1,8 @@
 ﻿using DesignAPI_DotNet8.Models;
-using DesignAPI_DotNet8.Models.BaseModels;
 using DesignAPI_DotNet8.Models.Colors;
 using DesignAPI_DotNet8.Models.GobiColor;
 using DesignAPI_DotNet8.Models.Users;
+using DesignAPI_DotNet8.Models.Suppliers;
 using Microsoft.EntityFrameworkCore;
 
 namespace DesignAPI_DotNet8.Data
@@ -11,7 +11,6 @@ namespace DesignAPI_DotNet8.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-                        
         }
         public DbSet<User> Users { get; set; }
 
@@ -150,7 +149,16 @@ namespace DesignAPI_DotNet8.Data
                 entity.Property(a => a.Name)
                     .IsRequired();
             });
-            #endregion            
+            #endregion
+
+            #region Supplier
+            //modelBuilder.Entity<Supplier>(entity =>
+            //{
+            //    entity.HasMany(s => s.Agents)
+            //        .WithMany()
+            //        .HasQuery
+            //});
+            #endregion
         }
     }
 }
