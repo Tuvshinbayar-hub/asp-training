@@ -2,7 +2,8 @@
 
 namespace DesignAPI_DotNet8.Models.Suppliers
 {
-    public class Factory: BaseWithModified
+    public class SupplierClassification1: Base
     {
+        public string Name { get; set; }
     }
 }

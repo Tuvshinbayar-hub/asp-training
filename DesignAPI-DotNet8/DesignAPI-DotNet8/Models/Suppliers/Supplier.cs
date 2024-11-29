@@ -16,10 +16,10 @@ namespace DesignAPI_DotNet8.Models.Suppliers
         public SupplierType SupplierType { get; set; }
 
         public int? Classification1Id { get; set; }
-        public Classification1? Classification1 { get; set; }
+        public SupplierClassification1? Classification1 { get; set; }
 
         public int? Classification2Id { get; set; }
-        public Classification2? Classification2 { get; set; }
+        public SupplierClassification2? Classification2 { get; set; }
 
         public string? Purpose { get; set; }
 

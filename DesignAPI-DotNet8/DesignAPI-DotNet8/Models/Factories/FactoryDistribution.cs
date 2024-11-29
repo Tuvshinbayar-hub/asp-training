@@ -1,8 +1,8 @@
 ﻿using DesignAPI_DotNet8.Models.BaseModels;
 
-namespace DesignAPI_DotNet8.Models.Factory
+namespace DesignAPI_DotNet8.Models.Factories
 {
-    public class Section: Base
+    public class FactoryDistribution: Base
     {
         public string Name { get; set; }
     }

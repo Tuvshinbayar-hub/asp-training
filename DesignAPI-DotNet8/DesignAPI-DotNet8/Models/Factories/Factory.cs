@@ -3,7 +3,7 @@ using DesignAPI_DotNet8.Models.BaseModels;
 using DesignAPI_DotNet8.Models.Suppliers;
 using DesignAPI_DotNet8.Models.GeneralSetup;
 
-namespace DesignAPI_DotNet8.Models.Factory
+namespace DesignAPI_DotNet8.Models.Factories
 {
     public class Factory: BaseWithModified
     {
@@ -11,7 +11,7 @@ namespace DesignAPI_DotNet8.Models.Factory
         public Supplier? Supplier { get; set; }
 
         public int? SectionId { get; set; }
-        public Section? Section { get; set; }
+        public FactorySection? Section { get; set; }
 
         public FactoryType FactoryType { get; set; } = FactoryType.Internal;
 
@@ -23,15 +23,16 @@ namespace DesignAPI_DotNet8.Models.Factory
         public int? MeasurementId { get; set; }
         public Measurement? Measurement { get; set; }
 
+        // HourlyJobMachineAll = MachineQuantity * HourlyJobMachine
+        // DailyJob = Hours * HourlyJobCapacity
+        // DailyJobTime = DailyJob / Hours
+        // MonthlyJob = Days * DailyJob
+        // MonthlyJobTime = MonthJob / HourlyJobMachineAll
         public int Efficiency { get; set; } = 0;
         public float HourlyJobMachine { get; set; } = 0f;
         public float HourlyJobCapacity { get; set; } = 0f;
-        public int Hours {  get; set; } = 0;
-        public int DailyJob { get; set; } = 0;
-        public int DialyJobTime { get; set; } = 0;
         public int Days { get; set; } = 30;
-        public int MonthlyJob { get; set; } = 0;
-        public int MonthlyJobTime { get; set; } = 0;
+        public int Hours {  get; set; } = 0;
         public int Months { get; set; } = 0;
     }
 }

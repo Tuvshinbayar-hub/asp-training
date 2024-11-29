@@ -1,8 +1,8 @@
 ﻿using DesignAPI_DotNet8.Models.BaseModels;
 
-namespace DesignAPI_DotNet8.Models.Suppliers
+namespace DesignAPI_DotNet8.Models.JobMasters
 {
-    public class Classification2: Base
+    public class ProductType: Base
     {
         public string Name { get; set; }
     }
