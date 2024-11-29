@@ -2,7 +2,7 @@
 
 namespace DesignAPI_DotNet8.Models.Materials
 {
-    public class MaterialComposition: Base
+    public class MaterialCompositionProperty: Base
     {
         public string Name { get; set; }
         public bool IsOKForMaterial { get; set; } = true;
