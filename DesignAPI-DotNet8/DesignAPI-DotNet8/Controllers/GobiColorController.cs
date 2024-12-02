@@ -23,7 +23,8 @@ namespace DesignAPI_DotNet8.Controllers
                 .Include(gc => gc.ColorType)
                 .Include(gc => gc.ColorShade)
                 .Include(gc => gc.PantoneColor)
-                .Include(gc => gc.ColorRecipe)
+                .Include(gc => gc.GobiColorRecipeDetails)
+                .Include(gc => gc.GobiColorRecipeHeaders)
                 .ToListAsync();
             return Ok(gobiColors);
         }
@@ -35,7 +36,8 @@ namespace DesignAPI_DotNet8.Controllers
                 .Include(gc => gc.ColorType)
                 .Include(gc => gc.ColorShade)
                 .Include(gc => gc.PantoneColor)
-                .Include(gc => gc.ColorRecipe)
+                .Include(gc => gc.GobiColorRecipeDetails)
+                .Include(gc => gc.GobiColorRecipeHeaders)
                 .FirstOrDefaultAsync(gc => gc.Id == id);
 
             if (gobiColor == null) return NotFound();
@@ -62,7 +64,7 @@ namespace DesignAPI_DotNet8.Controllers
             existingGobiColor.ColorTypeId = gobiColor.ColorTypeId;
             existingGobiColor.ColorShadeId = gobiColor.ColorShadeId;
             existingGobiColor.PantoneColorId = gobiColor.PantoneColorId;
-            existingGobiColor.ColorRecipeId = gobiColor.ColorRecipeId;
+            existingGobiColor.GobiColorRecipeDetails = gobiColor.GobiColorRecipeDetails;
 
             try
             {

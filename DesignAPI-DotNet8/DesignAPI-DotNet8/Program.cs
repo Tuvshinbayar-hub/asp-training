@@ -20,6 +20,7 @@ var connectionString = DesignAPI_DotNet8.Data.DatabaseConfig.GetConnectionString
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseMySQL(connectionString);
+    options.UseMSSQL
 });
 
 builder.Services.AddScoped<IStyleService, StyleService>();

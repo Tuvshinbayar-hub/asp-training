@@ -1,5 +1,6 @@
 ﻿using DesignAPI_DotNet8.Models.BaseModels;
 using DesignAPI_DotNet8.Enums;
+using DesignAPI_DotNet8.Models.GobiColor;
 
 namespace DesignAPI_DotNet8.Models.Colors
 {
@@ -21,8 +22,8 @@ namespace DesignAPI_DotNet8.Models.Colors
         public int? DyingMethodId { get; set; }
         public DyingMethod? DyingMethod { get; set; }
 
-        public int? ColorRecipeId { get; set; }
-        public ColorRecipe? ColorRecipe { get; set; }
+        public List<GobiColorRecipeHeader>? GobiColorRecipeHeaders { get; set; }
+        public List<GobiColorRecipeDetail>? GobiColorRecipeDetails { get; set; }
 
         public DandruffClassification DandruffClassification { get; set; }
     }

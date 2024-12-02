@@ -1,5 +1,6 @@
 ﻿using DesignAPI_DotNet8.Enums;
 using DesignAPI_DotNet8.Models.BaseModels;
+using DesignAPI_DotNet8.Models.Factories;
 using DesignAPI_DotNet8.Models.GeneralSetup;
 
 namespace DesignAPI_DotNet8.Models.Suppliers

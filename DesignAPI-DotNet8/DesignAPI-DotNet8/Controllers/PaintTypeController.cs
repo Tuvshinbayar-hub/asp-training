@@ -33,7 +33,7 @@ namespace DesignAPI_DotNet8.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPaintType([FromBody] PaintType paintType)
+        public async Task<IActionResult> AddPaintType([FromBody] GobiColorRecipeDetail paintType)
         {
             _context.PaintTypes.Add(paintType);
             await _context.SaveChangesAsync();
@@ -41,12 +41,12 @@ namespace DesignAPI_DotNet8.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePaintType(int id, [FromBody] PaintType paintType)
+        public async Task<IActionResult> UpdatePaintType(int id, [FromBody] GobiColorRecipeDetail paintType)
         {
             var existingPaintType = await _context.PaintTypes.FindAsync(id);
             if (existingPaintType == null) return NotFound();
 
-            existingPaintType.Name = paintType.Name;
+            existingPaintType.PaintType = paintType.PaintType;
 
             try
             {

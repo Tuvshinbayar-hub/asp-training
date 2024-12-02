@@ -16,14 +16,14 @@ public class ColorRecipeController : ControllerBase
 
     // GET: api/ColorRecipe
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ColorRecipe>>> GetColorRecipes()
+    public async Task<ActionResult<IEnumerable<GobiColorRecipeHeader>>> GetColorRecipes()
     {
         return await _context.ColorRecipes.ToListAsync();
     }
 
     // GET: api/ColorRecipe/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<ColorRecipe>> GetColorRecipe(int id)
+    public async Task<ActionResult<GobiColorRecipeHeader>> GetColorRecipe(int id)
     {
         var colorRecipe = await _context.ColorRecipes.FindAsync(id);
         if (colorRecipe == null) return NotFound();
@@ -33,7 +33,7 @@ public class ColorRecipeController : ControllerBase
 
     // POST: api/ColorRecipe
     [HttpPost]
-    public async Task<ActionResult<ColorRecipe>> CreateColorRecipe([FromBody] ColorRecipe colorRecipe)
+    public async Task<ActionResult<GobiColorRecipeHeader>> CreateColorRecipe([FromBody] GobiColorRecipeHeader colorRecipe)
     {
         _context.ColorRecipes.Add(colorRecipe);
         await _context.SaveChangesAsync();
@@ -43,13 +43,13 @@ public class ColorRecipeController : ControllerBase
 
     // PUT: api/ColorRecipe/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateColorRecipe(int id, [FromBody] ColorRecipe colorRecipe)
+    public async Task<IActionResult> UpdateColorRecipe(int id, [FromBody] GobiColorRecipeHeader colorRecipe)
     {
         var existingColorRecipe = await _context.ColorRecipes.FindAsync(id);
         if (existingColorRecipe == null) return NotFound();
 
         existingColorRecipe.ColorComposition = colorRecipe.ColorComposition;
-        existingColorRecipe.PaintTypes = colorRecipe.PaintTypes;
+        existingColorRecipe.GobiColorRecipeDetails = colorRecipe.GobiColorRecipeDetails;
 
         await _context.SaveChangesAsync();
 

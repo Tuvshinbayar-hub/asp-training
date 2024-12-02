@@ -3,9 +3,10 @@ using DesignAPI_DotNet8.Models.GobiColor;
 
 namespace DesignAPI_DotNet8.Models.Colors
 {
-    public class ColorRecipe: BaseWithModified
+    public class GobiColorRecipeHeader: BaseWithModified
     {
-        public string Name { get; set; }
+        public string GobiColorCode { get; set; }
+        public string RecipeName { get; set; }
         public string? ColorComposition { get; set; }
 
         public float NaturalColorI { get; set; } = 0f;
@@ -18,7 +19,7 @@ namespace DesignAPI_DotNet8.Models.Colors
         public float Silk { get; set; } = 0f;
         public bool IsDefault { get; set; } = true;
 
-        public List<int>? PaintTypeIds { get; set; }
-        public List<PaintType>? PaintTypes { get; set; }
+        public List<int>? GobiColorRecipeDetailIds { get; set; }
+        public List<GobiColorRecipeDetail>? GobiColorRecipeDetails { get; set; }
     }
 }

@@ -2,8 +2,8 @@
 using DesignAPI_DotNet8.Models.Colors;
 using DesignAPI_DotNet8.Models.GobiColor;
 using DesignAPI_DotNet8.Models.Users;
-using DesignAPI_DotNet8.Models.Suppliers;
 using Microsoft.EntityFrameworkCore;
+using DesignAPI_DotNet8.Models.GeneralSetup;
 
 namespace DesignAPI_DotNet8.Data
 {
@@ -23,8 +23,8 @@ namespace DesignAPI_DotNet8.Data
         public DbSet<ColorShade> ColorShades { get; set; }
         public DbSet<ColorType> ColorTypes { get; set; }
         public DbSet<DyingMethod> DyingMethods { get; set; }
-        public DbSet<PaintType> PaintTypes { get; set; }
-        public DbSet<ColorRecipe> ColorRecipes { get; set; }
+        public DbSet<GobiColorRecipeDetail> PaintTypes { get; set; }
+        public DbSet<GobiColorRecipeHeader> ColorRecipes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,18 +59,19 @@ namespace DesignAPI_DotNet8.Data
             modelBuilder.Entity<ColorShade>().ToTable("ColorShades");
             modelBuilder.Entity<ColorType>().ToTable("ColorTypes");
             modelBuilder.Entity<DyingMethod>().ToTable("DyingMethods");
-            modelBuilder.Entity<PaintType>().ToTable("PaintTypes");
-            modelBuilder.Entity<ColorRecipe>().ToTable("ColorRecipe");
+            modelBuilder.Entity<GobiColorRecipeDetail>().ToTable("PaintTypes");
+            modelBuilder.Entity<GobiColorRecipeHeader>().ToTable("ColorRecipe");
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Image>().ToTable("Image");
             #endregion
 
             #region Colors
             modelBuilder.Entity<PantoneColor>(entity =>
             {
                 entity.HasKey(a => a.Id);
-                entity.Property(a => a.Name)
-                    .IsRequired();
-                entity.Property(a => a.Code)
+                entity.HasIndex(a => a.GobiColorCode)
+                    .IsUnique();
+                entity.Property(a => a.GobiColorCode)
                     .IsRequired();
                 entity.Property(a => a.RgbHex)
                     .HasMaxLength(7);
@@ -97,6 +98,8 @@ namespace DesignAPI_DotNet8.Data
             modelBuilder.Entity<GobiColor>(entity =>
             {
                 entity.HasKey(a => a.Id);
+                entity.HasIndex(a => a.GobiColorCode)
+                    .IsUnique();
                 entity.Property(a => a.GobiColorCode)
                     .IsRequired();
                 entity.Property(a => a.FourDigitColorCode)
@@ -104,29 +107,50 @@ namespace DesignAPI_DotNet8.Data
                     .HasMaxLength(4);
                 entity.HasOne<ColorType>(e => e.ColorType)
                     .WithMany()
-                    .HasForeignKey("ColorTypeId")
+                    .HasForeignKey(ct => ct.ColorTypeId)
                     .OnDelete(DeleteBehavior.SetNull);
                 entity.HasOne<ColorShade>(e => e.ColorShade)
                     .WithMany()
-                    .HasForeignKey("ColorShadeId")
+                    .HasForeignKey(cs => cs.ColorShadeId)
                     .OnDelete(DeleteBehavior.SetNull);
+
                 entity.HasOne<PantoneColor>(e => e.PantoneColor)
                     .WithMany()
-                    .HasForeignKey("PantoneColorId")
+                    .HasForeignKey(e => e.GobiColorCode)
+                    .HasPrincipalKey(e => e.GobiColorCode)
                     .OnDelete(DeleteBehavior.SetNull);
-                entity.HasOne<ColorRecipe>(e => e.ColorRecipe)
-                    .WithMany()
-                    .HasForeignKey("ColorRecipeId")
+
+                // FKs
+                entity.HasMany<GobiColorRecipeHeader>(e => e.GobiColorRecipeHeaders)
+                    .WithOne()
+                    .HasForeignKey(e => e.GobiColorCode)
+                    .HasPrincipalKey(e => e.GobiColorCode)
+                    .OnDelete(DeleteBehavior.SetNull);
+                entity.HasMany<GobiColorRecipeDetail>(e => e.GobiColorRecipeDetails)
+                    .WithOne()
+                    .HasForeignKey(e => e.GobiColorCode)
+                    .HasPrincipalKey(e => e.GobiColorCode)
                     .OnDelete(DeleteBehavior.SetNull);
             });
 
-            modelBuilder.Entity<ColorRecipe>(entity =>
+            modelBuilder.Entity<GobiColorRecipeHeader>(entity =>
             {
                 entity.HasKey(a => a.Id);
+                entity.HasIndex(a => a.GobiColorCode)
+                    .IsUnique();
+                entity.Property(a => a.GobiColorCode)
+                    .IsRequired();
                 entity.Property(a => a.ColorComposition)
                     .IsRequired();
-                entity.HasMany<PaintType>(e => e.PaintTypes)
-                    .WithMany();
+            });
+
+            modelBuilder.Entity<GobiColorRecipeDetail>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.HasIndex(a => a.GobiColorCode)
+                    .IsUnique();    
+                entity.Property(a => a.GobiColorCode)
+                    .IsRequired();
             });
 
             modelBuilder.Entity<ColorGroup>(entity =>
@@ -143,12 +167,6 @@ namespace DesignAPI_DotNet8.Data
                     .IsRequired();
             });
 
-            modelBuilder.Entity<PaintType>(entity =>
-            {
-                entity.HasKey(a => a.Id);
-                entity.Property(a => a.Name)
-                    .IsRequired();
-            });
             #endregion
 
             #region Supplier
