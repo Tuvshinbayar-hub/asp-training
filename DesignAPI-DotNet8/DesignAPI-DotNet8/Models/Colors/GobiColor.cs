@@ -16,7 +16,7 @@ namespace DesignAPI_DotNet8.Models.Colors
         public int? ColorShadeId { get; set; }
         public ColorShade? ColorShade { get; set; }
 
-        public int? PantoneColorId { get; set; }
+        public string? PantoneColorCode { get; set; }
         public PantoneColor? PantoneColor { get; set; }
         
         public int? DyingMethodId { get; set; }

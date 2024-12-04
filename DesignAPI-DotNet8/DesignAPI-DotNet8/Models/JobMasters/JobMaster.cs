@@ -1,8 +1,6 @@
 ﻿using DesignAPI_DotNet8.Enums;
 using DesignAPI_DotNet8.Models.BaseModels;
 using DesignAPI_DotNet8.Models.Factories;
-using Microsoft.EntityFrameworkCore.Storage;
-using Org.BouncyCastle.Asn1.Mozilla;
 
 namespace DesignAPI_DotNet8.Models.JobMasters
 {

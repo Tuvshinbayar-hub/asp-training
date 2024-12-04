@@ -4,17 +4,17 @@ namespace DesignAPI_DotNet8.Models.Sizes
 {
     public class Size: BaseCreation
     {
-        public string Name { get; set; }
         public int SkuSizeCode { get; set; }
-        public int SortOrder { get; set; }
+        public string SizeName { get; set; }
 
-        public int DimensionTypeId { get; set; }
-        public DimensionType DimensionType { get; set; }
-
-        public List<int>? ProductTypesIds { get; set; }
         public List<ProductType>? ProductTypes { get; set; }
 
-        public List<int>? SizeGroupIds { get; set; }
+        public int? DimensionTypeId { get; set; }
+        public DimensionType? DimensionType { get; set; }
+
+        public int SortOrder { get; set; } = 0;
+
+        public int? SizeGroupId { get; set; }
         public SizeGroup? SizeGroup { get; set; }
     }
 }

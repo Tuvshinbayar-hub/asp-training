@@ -36,8 +36,8 @@ namespace DesignAPI_DotNet8.Controllers
                 .Include(gc => gc.ColorType)
                 .Include(gc => gc.ColorShade)
                 .Include(gc => gc.PantoneColor)
-                .Include(gc => gc.GobiColorRecipeDetails)
                 .Include(gc => gc.GobiColorRecipeHeaders)
+                .ThenInclude(gcrh => gcrh.GobiColorRecipeDetails)
                 .FirstOrDefaultAsync(gc => gc.Id == id);
 
             if (gobiColor == null) return NotFound();
@@ -63,7 +63,7 @@ namespace DesignAPI_DotNet8.Controllers
             existingGobiColor.FourDigitColorCode = gobiColor.FourDigitColorCode;
             existingGobiColor.ColorTypeId = gobiColor.ColorTypeId;
             existingGobiColor.ColorShadeId = gobiColor.ColorShadeId;
-            existingGobiColor.PantoneColorId = gobiColor.PantoneColorId;
+            existingGobiColor.PantoneColorCode = gobiColor.PantoneColorCode;
             existingGobiColor.GobiColorRecipeDetails = gobiColor.GobiColorRecipeDetails;
 
             try

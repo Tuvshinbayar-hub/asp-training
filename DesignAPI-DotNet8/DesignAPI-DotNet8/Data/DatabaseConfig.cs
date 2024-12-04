@@ -10,7 +10,7 @@
             var dbUser = Environment.GetEnvironmentVariable("DB_USERNAME") ?? "username";
             var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "password";
 
-            return $"server={dbHost};port={dbPort};database={dbName};user={dbUser};password={dbPassword}";
+            return $"Server={dbHost};Initial Catalog={dbName};Persist Security Info=False;User ID={dbUser};Password={dbPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;";
         }
     }
 }

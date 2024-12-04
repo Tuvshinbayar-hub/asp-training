@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ColorRecipeController : ControllerBase
+public class GobiColorRecipeHeaderController : ControllerBase
 {
     private readonly DataContext _context;
 
-    public ColorRecipeController(DataContext context)
+    public GobiColorRecipeHeaderController(DataContext context)
     {
         _context = context;
     }
@@ -18,14 +18,14 @@ public class ColorRecipeController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<GobiColorRecipeHeader>>> GetColorRecipes()
     {
-        return await _context.ColorRecipes.ToListAsync();
+        return await _context.GobiColorRecipeHeader.ToListAsync();
     }
 
     // GET: api/ColorRecipe/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<GobiColorRecipeHeader>> GetColorRecipe(int id)
     {
-        var colorRecipe = await _context.ColorRecipes.FindAsync(id);
+        var colorRecipe = await _context.GobiColorRecipeHeader.FindAsync(id);
         if (colorRecipe == null) return NotFound();
 
         return colorRecipe;
@@ -35,7 +35,7 @@ public class ColorRecipeController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<GobiColorRecipeHeader>> CreateColorRecipe([FromBody] GobiColorRecipeHeader colorRecipe)
     {
-        _context.ColorRecipes.Add(colorRecipe);
+        _context.GobiColorRecipeHeader.Add(colorRecipe);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetColorRecipe), new { id = colorRecipe.Id }, colorRecipe);
@@ -45,7 +45,7 @@ public class ColorRecipeController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateColorRecipe(int id, [FromBody] GobiColorRecipeHeader colorRecipe)
     {
-        var existingColorRecipe = await _context.ColorRecipes.FindAsync(id);
+        var existingColorRecipe = await _context.GobiColorRecipeHeader.FindAsync(id);
         if (existingColorRecipe == null) return NotFound();
 
         existingColorRecipe.ColorComposition = colorRecipe.ColorComposition;
@@ -60,10 +60,10 @@ public class ColorRecipeController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteColorRecipe(int id)
     {
-        var colorRecipe = await _context.ColorRecipes.FindAsync(id);
+        var colorRecipe = await _context.GobiColorRecipeHeader.FindAsync(id);
         if (colorRecipe == null) return NotFound();
 
-        _context.ColorRecipes.Remove(colorRecipe);
+        _context.GobiColorRecipeHeader.Remove(colorRecipe);
         await _context.SaveChangesAsync();
 
         return NoContent();
