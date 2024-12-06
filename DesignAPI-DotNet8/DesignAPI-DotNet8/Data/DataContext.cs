@@ -5,6 +5,7 @@ using DesignAPI_DotNet8.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using DesignAPI_DotNet8.Models.GeneralSetup;
 using DesignAPI_DotNet8.Models.Sizes;
+using DesignAPI_DotNet8.Models.Grading;
 
 namespace DesignAPI_DotNet8.Data
 {
@@ -38,6 +39,14 @@ namespace DesignAPI_DotNet8.Data
         public DbSet<SizeRangeCategory> SizeRangeCategories { get; set; }
         #endregion
 
+        #region DbSet Grading
+        public DbSet<GradingHeader> GradingHeaders { get; set; }
+        public DbSet<GradingPitch> GradingPitches { get; set; }
+        public DbSet<Dimension> Dimensions { get; set; }
+        public DbSet<ToleranceHeader> ToleranceHeaders { get; set; }
+        public DbSet<ToleranceDetail> ToleranceDetails { get; set; }
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region TPT Mappings
@@ -58,6 +67,12 @@ namespace DesignAPI_DotNet8.Data
             modelBuilder.Entity<ProductType>().ToTable("ProductTypes");
             modelBuilder.Entity<DimensionType>().ToTable("DimensionTypes");
             modelBuilder.Entity<SizeRangeCategory>().ToTable("SizeRangeCategegories");
+
+            modelBuilder.Entity<GradingHeader>().ToTable("GradingHeaders");
+            modelBuilder.Entity<GradingPitch>().ToTable("GradingPitches");
+            modelBuilder.Entity<Dimension>().ToTable("Dimensions");
+            modelBuilder.Entity<ToleranceHeader>().ToTable("ToleranceHeaders");
+            modelBuilder.Entity<ToleranceDetail>().ToTable("ToleranceDetails");
             #endregion
 
             #region Colors
@@ -177,12 +192,10 @@ namespace DesignAPI_DotNet8.Data
                     .WithMany();
                 entity.HasOne<DimensionType>(e => e.DimensionType)
                     .WithMany()
-                    .HasForeignKey(e => e.DimensionTypeId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(e => e.DimensionTypeId);
                 entity.HasOne<SizeGroup>(e => e.SizeGroup)
                     .WithMany()
-                    .HasForeignKey(sg => sg.SizeGroupId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(sg => sg.SizeGroupId);
             });
 
             modelBuilder.Entity<SizeRange>(entity =>
@@ -204,8 +217,8 @@ namespace DesignAPI_DotNet8.Data
                     .WithMany()
                     .HasForeignKey(dt => dt.Dimension1TypeId)
                     .OnDelete(DeleteBehavior.Restrict);
-                //FKs for non PKs
 
+                //FKs for non PKs
                 entity.HasMany<Size>(e => e.Sizes)
                    .WithMany()
                    .UsingEntity<Dictionary<string, object>>(
@@ -246,6 +259,37 @@ namespace DesignAPI_DotNet8.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name)
                     .IsRequired();
+            });
+            #endregion
+
+            #region Grading
+            modelBuilder.Entity<GradingHeader>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.HasIndex(a => a.Increment)
+                    .IsUnique();
+                entity.Property(a => a.Increment)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<GradingPitch>(entity => 
+            { 
+                entity.HasKey(a => a.Id);
+            });
+
+            modelBuilder.Entity<Dimension>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+            });
+
+            modelBuilder.Entity<ToleranceHeader>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+            });
+
+            modelBuilder.Entity<ToleranceDetail>(entity =>
+            {
+                entity.HasKey(a => a.Id);
             });
             #endregion
             #region Supplier

@@ -26,6 +26,8 @@ namespace DesignAPI_DotNet8.Controllers
                 .Include(gc => gc.GobiColorRecipeDetails)
                 .Include(gc => gc.GobiColorRecipeHeaders)
                 .ToListAsync();
+
+            Console.WriteLine("test from gobi colors");
             return Ok(gobiColors);
         }
 

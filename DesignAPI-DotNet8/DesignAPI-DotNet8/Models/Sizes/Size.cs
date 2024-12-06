@@ -5,6 +5,8 @@ namespace DesignAPI_DotNet8.Models.Sizes
     public class Size: BaseCreation
     {
         public int SkuSizeCode { get; set; }
+
+        // FK
         public string SizeName { get; set; }
 
         public List<ProductType>? ProductTypes { get; set; }

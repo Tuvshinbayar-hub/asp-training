@@ -4,6 +4,7 @@ namespace DesignAPI_DotNet8.Models.Sizes
 {
     public class SizeRange: BaseCreation
     {
+        // FK
         public string SizeRangeName {  get; set; }
         
         public int Dimension1TypeId { get; set; }
