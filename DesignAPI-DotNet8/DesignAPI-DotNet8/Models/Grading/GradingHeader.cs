@@ -1,6 +1,5 @@
 ﻿using DesignAPI_DotNet8.Models.BaseModels;
 using DesignAPI_DotNet8.Models.Sizes;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace DesignAPI_DotNet8.Models.Grading
 {
@@ -9,6 +8,8 @@ namespace DesignAPI_DotNet8.Models.Grading
         public string Increment { get; set; }
         public string? Description { get; set; }
         
+        public List<GradingPitch>? GradingPitches { get; set; }
+
         public List<int>? ProductTypeIds { get; set; }
         public List<ProductType>? ProductTypes { get; set; }
 
@@ -17,6 +18,8 @@ namespace DesignAPI_DotNet8.Models.Grading
         public List<Size>? Sizes {  get; set; }
         
         public Size? BaseSize { get; set; }
+
+        public bool IsActive { get; set; } = true;
         
         // DimensionType1 is referenced from SizeRange
     }

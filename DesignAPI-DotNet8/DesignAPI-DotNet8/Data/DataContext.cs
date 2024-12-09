@@ -270,26 +270,70 @@ namespace DesignAPI_DotNet8.Data
                     .IsUnique();
                 entity.Property(a => a.Increment)
                     .IsRequired();
+                entity.HasMany<GradingPitch>(e => e.GradingPitches)
+                .WithOne()
+                .HasForeignKey(gh => gh.Increment)
+                .HasPrincipalKey(gp => gp.Increment);
             });
 
             modelBuilder.Entity<GradingPitch>(entity => 
             { 
-                entity.HasKey(a => a.Id);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Increment)
+                    .IsRequired();
+                entity.HasIndex(e => e.Increment)
+                    .IsUnique();
+                entity.Property(e => e.Dimension)
+                    .IsRequired();
+                entity.Property(e => e.DimensionName)
+                    .IsRequired();
+
+                entity.HasOne<Dimension>(e => e.Dimension)
+                    .WithMany()
+                    .HasForeignKey(gp => gp.DimensionName)
+                    .HasPrincipalKey(d => d.DimensionName);
             });
 
             modelBuilder.Entity<Dimension>(entity =>
             {
-                entity.HasKey(a => a.Id);
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.DimensionName)
+                    .IsRequired();
+                entity.HasIndex(e => e.DimensionName)
+                    .IsUnique();
             });
 
             modelBuilder.Entity<ToleranceHeader>(entity =>
             {
                 entity.HasKey(a => a.Id);
+                entity.Property(e => e.Tolerance)
+                    .IsRequired();
+                entity.HasOne<ToleranceDetail>(e => e.ToleranceDetail)
+                .WithOne()
+                .HasForeignKey<ToleranceHeader>(th => th.Tolerance)
+                .HasPrincipalKey<ToleranceDetail>(td => td.DimensionName);
+
+                entity.HasMany<GradingHeader>(e => e.GradingHeaders)
+                .WithMany()
+                .UsingEntity<Dictionary<string, object>>(
+                       "ToleranceHeaderGradingHeader",
+                       j => j
+                           .HasOne<GradingHeader>()
+                           .WithMany()
+                           .HasForeignKey("jojo")
+                           .HasPrincipalKey(s => s.),
+                       j => j
+                           .HasOne<SizeRange>()
+                           .WithMany()
+                           .HasForeignKey("SizeRangeId")
+                   );
             });
 
             modelBuilder.Entity<ToleranceDetail>(entity =>
             {
-                entity.HasKey(a => a.Id);
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.DimensionName)
+                .IsUnique();
             });
             #endregion
             #region Supplier

@@ -11,7 +11,9 @@ namespace DesignAPI_DotNet8.Models.Grading
         public int? ProductTypeId { get; set; }
         public ProductType? ProductType { get; set; }
 
-        public List<string> Increments { get; set; }
+        public string DimensionName { get; set; }
         public Dimension Dimension { get; set; }
+
+        public List<string> Increments { get; set; }
     }
 }
