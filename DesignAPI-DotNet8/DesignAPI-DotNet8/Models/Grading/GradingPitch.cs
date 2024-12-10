@@ -14,6 +14,6 @@ namespace DesignAPI_DotNet8.Models.Grading
         public string DimensionName { get; set; }
         public Dimension Dimension { get; set; }
 
-        public List<string> Increments { get; set; }
+        public List<float> Increments { get; set; }
     }
 }

@@ -13,10 +13,13 @@ namespace DesignAPI_DotNet8.Models.Grading
         public List<int>? ProductTypeIds { get; set; }
         public List<ProductType>? ProductTypes { get; set; }
 
+        public string? SizeRangeName { get; set; }
         public SizeRange? SizeRange { get; set; }
 
+        public List<string>? SizeNames { get; set; }
         public List<Size>? Sizes {  get; set; }
         
+        public string? BaseSizeName { get; set; }
         public Size? BaseSize { get; set; }
 
         public bool IsActive { get; set; } = true;
