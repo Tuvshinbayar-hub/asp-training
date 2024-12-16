@@ -5,8 +5,7 @@ namespace DesignAPI_DotNet8.Models.Colors
 {
     public class PantoneColor : BaseWithModified
     {
-        public string GobiColorCode { get; set; }
-        public string PantoneColorName { get; set; }
+        public string? PantoneColorName { get; set; }
         public string PantoneColorCode { get; set; }
 
         public bool IsOkForStyle { get; set; } = true;

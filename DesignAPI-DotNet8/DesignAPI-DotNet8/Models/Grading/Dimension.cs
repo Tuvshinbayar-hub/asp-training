@@ -12,8 +12,8 @@ namespace DesignAPI_DotNet8.Models.Grading
         public int? ImageId { get; set; }
         public Image? Image { get; set; }
 
-        public List<int>? ProductTypeId { get; set; }
-        public List<ProductType>? ProductType { get; set; }
+        public List<int>? ProductTypeIds { get; set; }
+        public List<ProductType>? ProductTypes { get; set; }
 
         public string? Description { get; set; }
 

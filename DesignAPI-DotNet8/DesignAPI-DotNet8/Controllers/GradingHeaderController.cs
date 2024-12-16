@@ -35,10 +35,10 @@ namespace DesignAPI_DotNet8.Controllers
                                                            .ToListAsync();
             }
 
-            if (gradingHeaderDto.SizeIds != null && gradingHeaderDto.SizeIds.Any())
+            if (gradingHeaderDto.SizeNames != null && gradingHeaderDto.SizeNames.Any())
             {
                 gradingHeader.Sizes = await _context.Sizes
-                                                    .Where(s => gradingHeaderDto.SizeIds.Contains(s.Id))
+                                                    .Where(s => gradingHeaderDto.SizeNames.Contains(s.SizeName))
                                                     .ToListAsync();
             }
 
@@ -116,17 +116,17 @@ namespace DesignAPI_DotNet8.Controllers
             }
 
             // Update Sizes
-            if (gradingHeaderDto.SizeIds != null)
+            if (gradingHeaderDto.SizeNames != null)
             {
-                var existingSizeIds = existingGradingHeader.Sizes.Select(s => s.Id).ToHashSet();
-                var incomingSizeIds = new HashSet<int>(gradingHeaderDto.SizeIds);
+                var existingSizeNames = existingGradingHeader.Sizes.Select(s => s.SizeName).ToHashSet();
+                var incomingSizeNames = new HashSet<string>(gradingHeaderDto.SizeNames);
 
                 // Remove Sizes that are not in the incoming IDs
-                existingGradingHeader.Sizes.RemoveAll(s => !incomingSizeIds.Contains(s.Id));
+                existingGradingHeader.Sizes.RemoveAll(s => !incomingSizeNames.Contains(s.SizeName));
 
                 // Add new Sizes
                 var newSizes = await _context.Sizes
-                                             .Where(s => incomingSizeIds.Contains(s.Id) && !existingSizeIds.Contains(s.Id))
+                                             .Where(s => incomingSizeNames.Contains(s.SizeName) && !existingSizeNames.Contains(s.SizeName))
                                              .ToListAsync();
                 existingGradingHeader.Sizes.AddRange(newSizes);
             }

@@ -7,6 +7,6 @@
         public string Description { get; set; }
         public bool IsActive { get; set; } = true;
         public List<int> ProductTypeIds { get; set; }
-        public List<int> SizeIds { get; set; }
+        public List<string> SizeNames { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace DesignAPI_DotNet8.Models.Grading
     {
         // Fk
         public string Increment { get; set; }
-        
+
         public int? ProductTypeId { get; set; }
         public ProductType? ProductType { get; set; }
 

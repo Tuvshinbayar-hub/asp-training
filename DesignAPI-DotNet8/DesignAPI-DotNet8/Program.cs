@@ -19,7 +19,6 @@ builder.Services.AddSwaggerGen();
 var connectionString = DesignAPI_DotNet8.Data.DatabaseConfig.GetConnectionString();
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    Console.WriteLine(connectionString);
     options.UseSqlServer(connectionString);
 });
 

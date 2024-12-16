@@ -78,17 +78,23 @@ namespace DesignAPI_DotNet8.Data
             #region Colors
             modelBuilder.Entity<PantoneColor>(entity =>
             {
-                entity.HasKey(a => a.Id);
-                entity.HasIndex(a => a.GobiColorCode)
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.PantoneColorCode)
                     .IsUnique();
-                entity.Property(a => a.GobiColorCode)
+                entity.Property(e => e.PantoneColorCode)
                     .IsRequired();
+
                 entity.Property(a => a.RgbHex)
                     .HasMaxLength(7);
+                entity.HasOne<Image>(e => e.Image)
+                    .WithOne()
+                    .HasForeignKey<PantoneColor>(pc => pc.ImageId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
                 entity.HasOne<ColorGroup>(e => e.ColorGroup)
                     .WithMany()
-                    .HasForeignKey("ColorGroupId")
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(pc => pc.ColorGroupId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ColorType>(entity =>
@@ -112,29 +118,28 @@ namespace DesignAPI_DotNet8.Data
                     .IsUnique();
                 entity.Property(a => a.GobiColorCode)
                     .IsRequired();
+
                 entity.Property(a => a.FourDigitColorCode)
                     .IsRequired()
                     .HasMaxLength(4);
+
                 entity.HasOne<ColorType>(e => e.ColorType)
                     .WithMany()
-                    .HasForeignKey(ct => ct.ColorTypeId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(gc => gc.ColorTypeId);
+
                 entity.HasOne<ColorShade>(e => e.ColorShade)
                     .WithMany()
-                    .HasForeignKey(cs => cs.ColorShadeId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(gc => gc.ColorShadeId);
 
                 // FKs for non PK
                 entity.HasOne<PantoneColor>(e => e.PantoneColor)
                     .WithMany()
-                    .HasForeignKey(gc => gc.PantoneColorCode)
                     .HasPrincipalKey(pc => pc.PantoneColorCode)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(gc => gc.PantoneColorCode);
                 entity.HasMany<GobiColorRecipeHeader>(e => e.GobiColorRecipeHeaders)
                     .WithOne()
-                    .HasForeignKey(e => e.GobiColorCode)
-                    .HasPrincipalKey(e => e.GobiColorCode)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .HasPrincipalKey(gc => gc.GobiColorCode)
+                    .HasForeignKey(gcrh => gcrh.GobiColorCode);
             });
 
             modelBuilder.Entity<GobiColorRecipeHeader>(entity =>
@@ -148,8 +153,8 @@ namespace DesignAPI_DotNet8.Data
                     .IsRequired();
                 entity.HasMany<GobiColorRecipeDetail>(e => e.GobiColorRecipeDetails)
                     .WithOne()
-                    .HasForeignKey(gcrh =>  gcrh.GobiColorCode)
-                    .HasPrincipalKey(gcrd => gcrd.GobiColorCode)
+                    .HasPrincipalKey(gcrh => gcrh.GobiColorCode)
+                    .HasForeignKey(gcrd =>  gcrd.GobiColorCode)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -192,10 +197,12 @@ namespace DesignAPI_DotNet8.Data
                     .WithMany();
                 entity.HasOne<DimensionType>(e => e.DimensionType)
                     .WithMany()
-                    .HasForeignKey(e => e.DimensionTypeId);
+                    .HasForeignKey(s => s.DimensionTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne<SizeGroup>(e => e.SizeGroup)
                     .WithMany()
-                    .HasForeignKey(sg => sg.SizeGroupId);
+                    .HasForeignKey(s => s.SizeGroupId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<SizeRange>(entity =>
@@ -203,16 +210,15 @@ namespace DesignAPI_DotNet8.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.SizeRangeName)
                     .IsRequired();
-                entity.Property(e => e.Dimension1TypeId)
-                    .IsRequired();
                 
                 // Check if it's working
                 entity.HasMany<ProductType>(e => e.ProductTypes)
                     .WithMany();
                 entity.HasOne<SizeRangeCategory>(e => e.SizeRangeCategory)
                     .WithMany()
-                    .HasForeignKey(src => src.SizeRangeCategoryId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                    .HasForeignKey(sr => sr.SizeRangeCategoryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
                 entity.HasOne<DimensionType>(e => e.Dimension1Type)
                     .WithMany()
                     .HasForeignKey(dt => dt.Dimension1TypeId)
@@ -232,6 +238,7 @@ namespace DesignAPI_DotNet8.Data
                            .HasOne<SizeRange>()
                            .WithMany()
                            .HasForeignKey("SizeRangeId")
+                           .HasPrincipalKey(sr => sr.Id)
                    );
             });
 
@@ -272,13 +279,16 @@ namespace DesignAPI_DotNet8.Data
                     .IsRequired();
                 entity.HasMany<GradingPitch>(e => e.GradingPitches)
                     .WithOne()
-                    .HasForeignKey(gh => gh.Increment)
-                    .HasPrincipalKey(gp => gp.Increment);
+                    .HasForeignKey(gp => gp.Increment)
+                    .HasPrincipalKey(gh => gh.Increment);
 
                 entity.HasOne<SizeRange>(e => e.SizeRange)
                     .WithMany()
                     .HasForeignKey(gh => gh.SizeRangeName)
                     .HasPrincipalKey(sr => sr.SizeRangeName);
+
+                entity.HasMany<ProductType>(e => e.ProductTypes)
+                    .WithMany();
 
                 entity.HasMany<Size>(e => e.Sizes)
                     .WithMany()
@@ -292,13 +302,14 @@ namespace DesignAPI_DotNet8.Data
                         j => j
                             .HasOne<GradingHeader>()
                             .WithMany()
-                            .HasForeignKey("GradingHeaderId")
+                            .HasForeignKey("Id")
+                            .HasPrincipalKey(gh => gh.Id)
                         );
 
                 entity.HasOne<Size>(e => e.BaseSize)
                     .WithMany()
-                    .HasForeignKey(gh => gh.BaseSizeName)
-                    .HasPrincipalKey(s => s.SizeName);
+                    .HasForeignKey(s => s.BaseSizeName)
+                    .HasPrincipalKey(gh => gh.SizeName);
             });
 
             modelBuilder.Entity<GradingPitch>(entity => 
@@ -319,7 +330,7 @@ namespace DesignAPI_DotNet8.Data
 
                 entity.HasOne<ProductType>(e => e.ProductType)
                     .WithMany()
-                    .HasForeignKey(pt => pt.ProductTypeId);
+                    .HasForeignKey(gp => gp.ProductTypeId);
             });
 
             modelBuilder.Entity<Dimension>(entity =>
@@ -329,6 +340,13 @@ namespace DesignAPI_DotNet8.Data
                     .IsRequired();
                 entity.HasIndex(e => e.DimensionName)
                     .IsUnique();
+
+                entity.HasOne<Image>(e => e.Image)
+                    .WithMany()
+                    .HasForeignKey(d => d.ImageId);
+
+                entity.HasMany<ProductType>(e => e.ProductTypes)
+                    .WithMany();
             });
 
             modelBuilder.Entity<ToleranceHeader>(entity =>
@@ -354,6 +372,7 @@ namespace DesignAPI_DotNet8.Data
                                 .HasOne<ToleranceHeader>()
                                 .WithMany()
                                 .HasForeignKey("ToleranceHeaderId")
+                                .HasPrincipalKey(th => th.Id)
                         );
 
                 entity.HasMany<Dimension>(e => e.Dimensions)
@@ -361,7 +380,7 @@ namespace DesignAPI_DotNet8.Data
                     .UsingEntity<Dictionary<string, object>>(
                             "ToleranceHeaderDimension",
                             j => j
-                            .HasOne<Dimension>()
+                            .HasOne<Dimension>() 
                             .WithMany()
                             .HasForeignKey("DimensionName")
                             .HasPrincipalKey(d => d.DimensionName),
@@ -369,6 +388,7 @@ namespace DesignAPI_DotNet8.Data
                             .HasOne<ToleranceHeader>()
                             .WithMany()
                             .HasForeignKey("ToleranceHeaderId")
+                            .HasPrincipalKey(th => th.Id)
                         );
             });
 
@@ -380,11 +400,12 @@ namespace DesignAPI_DotNet8.Data
 
                 entity.HasOne<Dimension>(e => e.Dimension)
                     .WithMany()
-                    .HasForeignKey(td => td.DimensionName)
-                    .HasPrincipalKey(d => d.DimensionName)
+                    .HasForeignKey(d => d.DimensionName)
+                    .HasPrincipalKey(td => td.DimensionName)
                     .OnDelete(DeleteBehavior.Restrict);
             });
             #endregion
+
             #region Supplier
             //modelBuilder.Entity<Supplier>(entity =>
             //{

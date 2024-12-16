@@ -4,6 +4,7 @@ using DesignAPI_DotNet8.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesignAPI_DotNet8.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241211023938_RefinedRelationShipsV2")]
+    partial class RefinedRelationShipsV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -628,6 +631,9 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Property<int?>("DimensionId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("GradingHeaderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -635,6 +641,8 @@ namespace DesignAPI_DotNet8.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DimensionId");
+
+                    b.HasIndex("GradingHeaderId");
 
                     b.ToTable("ProductTypes", (string)null);
                 });
@@ -815,32 +823,17 @@ namespace DesignAPI_DotNet8.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("GradingHeaderProductType", b =>
-                {
-                    b.Property<int>("GradingHeaderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductTypesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GradingHeaderId", "ProductTypesId");
-
-                    b.HasIndex("ProductTypesId");
-
-                    b.ToTable("GradingHeaderProductType");
-                });
-
             modelBuilder.Entity("GradingHeaderSize", b =>
                 {
                     b.Property<int>("GradingHeaderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SizeNames")
+                    b.Property<string>("SizeName")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("GradingHeaderId", "SizeNames");
+                    b.HasKey("GradingHeaderId", "SizeName");
 
-                    b.HasIndex("SizeNames");
+                    b.HasIndex("SizeName");
 
                     b.ToTable("GradingHeaderSize");
                 });
@@ -1140,6 +1133,10 @@ namespace DesignAPI_DotNet8.Migrations
                     b.HasOne("DesignAPI_DotNet8.Models.Grading.Dimension", null)
                         .WithMany("ProductType")
                         .HasForeignKey("DimensionId");
+
+                    b.HasOne("DesignAPI_DotNet8.Models.Grading.GradingHeader", null)
+                        .WithMany("ProductTypes")
+                        .HasForeignKey("GradingHeaderId");
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Sizes.Size", b =>
@@ -1193,21 +1190,6 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Navigation("SizeRangeCategory");
                 });
 
-            modelBuilder.Entity("GradingHeaderProductType", b =>
-                {
-                    b.HasOne("DesignAPI_DotNet8.Models.Grading.GradingHeader", null)
-                        .WithMany()
-                        .HasForeignKey("GradingHeaderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DesignAPI_DotNet8.Models.Sizes.ProductType", null)
-                        .WithMany()
-                        .HasForeignKey("ProductTypesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GradingHeaderSize", b =>
                 {
                     b.HasOne("DesignAPI_DotNet8.Models.Grading.GradingHeader", null)
@@ -1218,7 +1200,7 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasOne("DesignAPI_DotNet8.Models.Sizes.Size", null)
                         .WithMany()
-                        .HasForeignKey("SizeNames")
+                        .HasForeignKey("SizeName")
                         .HasPrincipalKey("SizeName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1322,6 +1304,8 @@ namespace DesignAPI_DotNet8.Migrations
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Grading.GradingHeader", b =>
                 {
                     b.Navigation("GradingPitches");
+
+                    b.Navigation("ProductTypes");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,7 +18,7 @@ namespace DesignAPI_DotNet8.Models.Grading
 
         public List<string>? SizeNames { get; set; }
         public List<Size>? Sizes {  get; set; }
-        
+
         public string? BaseSizeName { get; set; }
         public Size? BaseSize { get; set; }
 

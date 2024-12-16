@@ -13,8 +13,8 @@ namespace DesignAPI_DotNet8.Models.Sizes
         public List<ProductType>? ProductTypes { get; set; }
 
         public string? Description { get; set; }
-
-        public List<Size>? Sizes { get; set; }
+        
+        public List<Size>? Sizes { get; set; }  
         public Size? BaseSize { get; set; }
 
         public bool IsOkForStyle {  get; set; } = true;
