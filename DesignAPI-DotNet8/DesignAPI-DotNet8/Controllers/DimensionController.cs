@@ -31,7 +31,7 @@ namespace DesignAPI_DotNet8.Controllers
 
             if (dimensionDto.ProductTypeIds != null && dimensionDto.ProductTypeIds.Any())
             {
-                dimension.ProductType = await _context.ProductTypes
+                dimension.ProductTypes = await _context.ProductTypes
                                                       .Where(pt => dimensionDto.ProductTypeIds.Contains(pt.Id))
                                                       .ToListAsync();
             }
@@ -48,7 +48,7 @@ namespace DesignAPI_DotNet8.Controllers
         {
             var dimension = await _context.Dimensions
                                           .Include(d => d.Image)
-                                          .Include(d => d.ProductType)
+                                          .Include(d => d.ProductTypes)
                                           .FirstOrDefaultAsync(d => d.Id == id);
 
             if (dimension == null)
@@ -65,7 +65,7 @@ namespace DesignAPI_DotNet8.Controllers
         {
             return await _context.Dimensions
                                  .Include(d => d.Image)
-                                 .Include(d => d.ProductType)
+                                 .Include(d => d.ProductTypes)
                                  .ToListAsync();
         }
 
@@ -79,7 +79,7 @@ namespace DesignAPI_DotNet8.Controllers
             }
 
             var existingDimension = await _context.Dimensions
-                                                  .Include(d => d.ProductType)
+                                                  .Include(d => d.ProductTypes)
                                                   .FirstOrDefaultAsync(d => d.Id == id);
 
             if (existingDimension == null)
@@ -95,17 +95,17 @@ namespace DesignAPI_DotNet8.Controllers
             // Update ProductTypes
             if (dimensionDto.ProductTypeIds != null)
             {
-                var existingProductTypeIds = existingDimension.ProductType.Select(pt => pt.Id).ToHashSet();
+                var existingProductTypeIds = existingDimension.ProductTypes.Select(pt => pt.Id).ToHashSet();
                 var incomingProductTypeIds = new HashSet<int>(dimensionDto.ProductTypeIds);
 
                 // Remove ProductTypes that are not in the incoming IDs
-                existingDimension.ProductType.RemoveAll(pt => !incomingProductTypeIds.Contains(pt.Id));
+                existingDimension.ProductTypes.RemoveAll(pt => !incomingProductTypeIds.Contains(pt.Id));
 
                 // Add new ProductTypes
                 var newProductTypes = await _context.ProductTypes
                                                     .Where(pt => incomingProductTypeIds.Contains(pt.Id) && !existingProductTypeIds.Contains(pt.Id))
                                                     .ToListAsync();
-                existingDimension.ProductType.AddRange(newProductTypes);
+                existingDimension.ProductTypes.AddRange(newProductTypes);
             }
 
             _context.Entry(existingDimension).State = EntityState.Modified;

@@ -46,7 +46,6 @@ namespace DesignAPI_DotNet8.Controllers
             if (existingPantoneColor == null) return NotFound();
 
             // Update properties
-            existingPantoneColor.GobiColorCode = pantoneColor.GobiColorCode;
             existingPantoneColor.PantoneColorCode = pantoneColor.PantoneColorCode;
             existingPantoneColor.PantoneColorName = pantoneColor.PantoneColorName;
             existingPantoneColor.RgbHex = pantoneColor.RgbHex;

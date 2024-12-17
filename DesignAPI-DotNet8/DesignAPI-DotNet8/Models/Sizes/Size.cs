@@ -9,6 +9,7 @@ namespace DesignAPI_DotNet8.Models.Sizes
         // FK
         public string SizeName { get; set; }
 
+        public List<int>? ProductTypesIds { get; set; }
         public List<ProductType>? ProductTypes { get; set; }
 
         public int? DimensionTypeId { get; set; }
