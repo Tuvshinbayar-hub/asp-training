@@ -144,12 +144,12 @@ namespace DesignAPI_DotNet8.Data
 
             modelBuilder.Entity<GobiColorRecipeHeader>(entity =>
             {
-                entity.HasKey(a => a.Id);
-                entity.HasIndex(a => a.GobiColorCode)
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.GobiColorCode)
                     .IsUnique();
-                entity.Property(a => a.GobiColorCode)
+                entity.Property(e => e.GobiColorCode)
                     .IsRequired();
-                entity.Property(a => a.ColorComposition)
+                entity.Property(e => e.ColorComposition)
                     .IsRequired();
                 entity.HasMany<GobiColorRecipeDetail>(e => e.GobiColorRecipeDetails)
                     .WithOne()
@@ -160,24 +160,24 @@ namespace DesignAPI_DotNet8.Data
 
             modelBuilder.Entity<GobiColorRecipeDetail>(entity =>
             {
-                entity.HasKey(a => a.Id);
-                entity.HasIndex(a => a.GobiColorCode)
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.GobiColorCode)
                     .IsUnique();
-                entity.Property(a => a.GobiColorCode)
+                entity.Property(e => e.GobiColorCode)
                     .IsRequired();
             });
 
             modelBuilder.Entity<ColorGroup>(entity =>
             {
-                entity.HasKey(a => a.Id);
-                entity.Property(a => a.Name)
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name)
                     .IsRequired();
             });
 
             modelBuilder.Entity<DyingMethod>(entity =>
             {
-                entity.HasKey(a => a.Id);
-                entity.Property(a => a.Name)
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name)
                     .IsRequired();
             });
             #endregion
@@ -191,6 +191,11 @@ namespace DesignAPI_DotNet8.Data
                     .IsRequired();
                 entity.Property(e => e.SortOrder)
                     .IsRequired();
+
+                entity.HasIndex(e => new {e.SizeName, e.DimensionTypeId})
+                    .IsUnique();
+                entity.HasIndex(e => new {e.SortOrder, e.DimensionTypeId})
+                    .IsUnique();
 
                 // Check if it's working
                 entity.HasMany<ProductType>(e => e.ProductTypes)
@@ -232,8 +237,8 @@ namespace DesignAPI_DotNet8.Data
                        j => j
                            .HasOne<Size>()
                            .WithMany()
-                           .HasForeignKey("SizeName")
-                           .HasPrincipalKey(s => s.SizeName),
+                           .HasForeignKey(["SizeName", "DimensionTypeId"])
+                           .HasPrincipalKey(s => new { s.SizeName, s.DimensionTypeId }),
                        j => j
                            .HasOne<SizeRange>()
                            .WithMany()
@@ -297,8 +302,8 @@ namespace DesignAPI_DotNet8.Data
                         j => j
                             .HasOne<Size>()
                             .WithMany()
-                            .HasForeignKey("SizeName")
-                            .HasPrincipalKey(s => s.SizeName),
+                            .HasForeignKey(["SizeName", "DimensionTypeId"])
+                            .HasPrincipalKey(s => new {s.SizeName, s.DimensionTypeId}),
                         j => j
                             .HasOne<GradingHeader>()
                             .WithMany()
@@ -308,8 +313,8 @@ namespace DesignAPI_DotNet8.Data
 
                 entity.HasOne<Size>(e => e.BaseSize)
                     .WithMany()
-                    .HasForeignKey(s => s.BaseSizeName)
-                    .HasPrincipalKey(gh => gh.SizeName);
+                    .HasForeignKey(["SizeName", "DimensionTypeId"])
+                    .HasPrincipalKey(s => new { s.SizeName, s.DimensionTypeId });
             });
 
             modelBuilder.Entity<GradingPitch>(entity => 
