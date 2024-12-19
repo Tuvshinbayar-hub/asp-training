@@ -23,7 +23,6 @@ namespace DesignAPI_DotNet8.Models.Grading
         public Size? BaseSize { get; set; }
 
         public bool IsActive { get; set; } = true;
-        
         // DimensionType1 is referenced from SizeRange
     }
 }

@@ -42,7 +42,11 @@ public class SizeController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Size>>> GetSizes()
     {
-        return await _context.Sizes.ToListAsync();
+        return await _context.Sizes
+            .Include(s => s.DimensionType)
+            .Include(s => s.SizeGroup)
+            .Include(s => s.ProductTypes)
+            .ToListAsync();
     }
 
     // Update a Size

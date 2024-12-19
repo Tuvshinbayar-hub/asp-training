@@ -203,7 +203,8 @@ namespace DesignAPI_DotNet8.Data
                 entity.HasOne<DimensionType>(e => e.DimensionType)
                     .WithMany()
                     .HasForeignKey(s => s.DimensionTypeId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .IsRequired();
                 entity.HasOne<SizeGroup>(e => e.SizeGroup)
                     .WithMany()
                     .HasForeignKey(s => s.SizeGroupId)
