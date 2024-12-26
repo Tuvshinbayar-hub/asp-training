@@ -66,7 +66,7 @@ namespace DesignAPI_DotNet8.Data
             modelBuilder.Entity<SizeRange>().ToTable("SizeRange");
             modelBuilder.Entity<ProductType>().ToTable("ProductTypes");
             modelBuilder.Entity<DimensionType>().ToTable("DimensionTypes");
-            modelBuilder.Entity<SizeRangeCategory>().ToTable("SizeRangeCategegories");
+            modelBuilder.Entity<SizeRangeCategory>().ToTable("SizeRangeCategories");
 
             modelBuilder.Entity<GradingHeader>().ToTable("GradingHeaders");
             modelBuilder.Entity<GradingPitch>().ToTable("GradingPitches");
@@ -229,6 +229,11 @@ namespace DesignAPI_DotNet8.Data
                     .WithMany()
                     .HasForeignKey(dt => dt.Dimension1TypeId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne<Size>(e => e.BaseSize)
+                    .WithMany()
+                    .HasForeignKey(["SizeName", "DimensionTypeId"])
+                    .HasPrincipalKey(s => new { s.SizeName, s.DimensionTypeId });
 
                 //FKs for non PKs
                 entity.HasMany<Size>(e => e.Sizes)
