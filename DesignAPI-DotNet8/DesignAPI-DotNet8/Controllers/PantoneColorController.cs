@@ -19,7 +19,9 @@ namespace DesignAPI_DotNet8.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPantoneColors()
         {
-            var pantoneColors = await _context.PantoneColors.ToListAsync();
+            var pantoneColors = await _context.PantoneColors
+                .Include(pc => pc.ColorGroup)
+                .ToListAsync();
             return Ok(pantoneColors);
         }
 

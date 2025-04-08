@@ -4,6 +4,7 @@ using DesignAPI_DotNet8.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesignAPI_DotNet8.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250110080428_GobiColorRecipeHeaderUpdate")]
+    partial class GobiColorRecipeHeaderUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,6 +191,9 @@ namespace DesignAPI_DotNet8.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.PrimitiveCollection<string>("GobiColorRecipeDetailIds")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
 
@@ -222,8 +228,6 @@ namespace DesignAPI_DotNet8.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
-
-                    b.HasIndex("GobiColorCode");
 
                     b.HasIndex("ModifiedById");
 
@@ -373,6 +377,9 @@ namespace DesignAPI_DotNet8.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("GobiColorId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -389,6 +396,8 @@ namespace DesignAPI_DotNet8.Migrations
 
                     b.HasIndex("GobiColorCode")
                         .IsUnique();
+
+                    b.HasIndex("GobiColorId");
 
                     b.ToTable("GobiColorRecipeDetail", (string)null);
                 });
@@ -1051,12 +1060,16 @@ namespace DesignAPI_DotNet8.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedById");
 
-                    b.HasOne("DesignAPI_DotNet8.Models.Colors.GobiColor", null)
+                    b.HasOne("DesignAPI_DotNet8.Models.Colors.GobiColorRecipeHeader", null)
                         .WithMany("GobiColorRecipeDetails")
                         .HasForeignKey("GobiColorCode")
                         .HasPrincipalKey("GobiColorCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DesignAPI_DotNet8.Models.Colors.GobiColor", null)
+                        .WithMany("GobiColorRecipeDetails")
+                        .HasForeignKey("GobiColorId");
 
                     b.Navigation("CreatedBy");
                 });
@@ -1336,6 +1349,11 @@ namespace DesignAPI_DotNet8.Migrations
                     b.Navigation("GobiColorRecipeDetails");
 
                     b.Navigation("GobiColorRecipeHeaders");
+                });
+
+            modelBuilder.Entity("DesignAPI_DotNet8.Models.Colors.GobiColorRecipeHeader", b =>
+                {
+                    b.Navigation("GobiColorRecipeDetails");
                 });
 
             modelBuilder.Entity("DesignAPI_DotNet8.Models.Grading.GradingHeader", b =>

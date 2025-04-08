@@ -61,6 +61,7 @@ public class SizeRangeController : ControllerBase
         return await _context.SizeRanges
             .Include(sr => sr.Dimension1Type)
             .Include(sr => sr.ProductTypes)
+            .Include(sr => sr.BaseSize)
             .Include(sr => sr.Sizes).ToListAsync();
     }
 

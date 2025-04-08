@@ -21,6 +21,8 @@ namespace DesignAPI_DotNet8.Models.Colors
         
         public int? DyingMethodId { get; set; }
         public DyingMethod? DyingMethod { get; set; }
+        
+        public bool IsActive { get; set; } = true;
 
         public List<GobiColorRecipeHeader>? GobiColorRecipeHeaders { get; set; }
         public List<GobiColorRecipeDetail>? GobiColorRecipeDetails { get; set; }

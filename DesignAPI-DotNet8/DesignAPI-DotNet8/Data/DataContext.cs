@@ -139,23 +139,22 @@ namespace DesignAPI_DotNet8.Data
                 entity.HasMany<GobiColorRecipeHeader>(e => e.GobiColorRecipeHeaders)
                     .WithOne()
                     .HasPrincipalKey(gc => gc.GobiColorCode)
-                    .HasForeignKey(gcrh => gcrh.GobiColorCode);
+                    .HasForeignKey(gcrh => gcrh.GobiColorCode)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasMany<GobiColorRecipeDetail>(e => e.GobiColorRecipeDetails)
+                    .WithOne()
+                    .HasPrincipalKey(gc => gc.GobiColorCode)
+                    .HasForeignKey(gcrd => gcrd.GobiColorCode)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<GobiColorRecipeHeader>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.GobiColorCode)
-                    .IsUnique();
                 entity.Property(e => e.GobiColorCode)
                     .IsRequired();
                 entity.Property(e => e.ColorComposition)
                     .IsRequired();
-                entity.HasMany<GobiColorRecipeDetail>(e => e.GobiColorRecipeDetails)
-                    .WithOne()
-                    .HasPrincipalKey(gcrh => gcrh.GobiColorCode)
-                    .HasForeignKey(gcrd =>  gcrd.GobiColorCode)
-                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<GobiColorRecipeDetail>(entity =>

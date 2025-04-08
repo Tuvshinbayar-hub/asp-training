@@ -27,7 +27,6 @@ namespace DesignAPI_DotNet8.Controllers
                 .Include(gc => gc.GobiColorRecipeHeaders)
                 .ToListAsync();
 
-            Console.WriteLine("test from gobi colors");
             return Ok(gobiColors);
         }
 
@@ -38,8 +37,10 @@ namespace DesignAPI_DotNet8.Controllers
                 .Include(gc => gc.ColorType)
                 .Include(gc => gc.ColorShade)
                 .Include(gc => gc.PantoneColor)
+                .ThenInclude(pc => pc.ColorGroup)
                 .Include(gc => gc.GobiColorRecipeHeaders)
-                .ThenInclude(gcrh => gcrh.GobiColorRecipeDetails)
+                .Include(gc => gc.GobiColorRecipeDetails)
+                .Include(gc => gc.DyingMethod)
                 .FirstOrDefaultAsync(gc => gc.Id == id);
 
             if (gobiColor == null) return NotFound();

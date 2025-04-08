@@ -49,7 +49,6 @@ public class GobiColorRecipeHeaderController : ControllerBase
         if (existingColorRecipe == null) return NotFound();
 
         existingColorRecipe.ColorComposition = colorRecipe.ColorComposition;
-        existingColorRecipe.GobiColorRecipeDetails = colorRecipe.GobiColorRecipeDetails;
 
         await _context.SaveChangesAsync();
 

@@ -18,8 +18,5 @@ namespace DesignAPI_DotNet8.Models.Colors
         public float Cotton {  get; set; } = 0f;
         public float Silk { get; set; } = 0f;
         public bool IsDefault { get; set; } = true;
-
-        public List<int>? GobiColorRecipeDetailIds { get; set; }
-        public List<GobiColorRecipeDetail>? GobiColorRecipeDetails { get; set; }
     }
 }
